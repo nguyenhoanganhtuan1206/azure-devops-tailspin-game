@@ -5,9 +5,6 @@ parameters:
   - name: azureSubscription
     type: string
     default: MyARMSubscription
-  - name: vmImageName
-    type: string
-    default: 'ubuntu-latest'
 
 variables:
   - group: web-app-variables
@@ -18,9 +15,6 @@ variables:
   - name: releaseBranchName
     value: 'release'
 
-  - name: vmImageName
-    value: 'ubuntu-latest'
-
 stages:
   - stage: Deploy_Build
     displayName: 'Build the web application'
@@ -28,7 +22,7 @@ stages:
       - job: 'Build'
         displayName: 'Build job'
         pool:
-          vmImage: $(vmImageName)
+          vmImage: 'ubuntu-latest'
           demands:
             - npm
         variables:
