@@ -77,7 +77,6 @@ stages:
               ArtifactName: 'drop'
               publishLocation: 'Container'
               
-    
   - stage: 'Dev'
     displayName: 'Deploy to the dev environment'
     dependsOn: Build
@@ -103,4 +102,27 @@ stages:
                     appName: $(webAppNameDev)
                     package: '$(Pipeline.Workspace)/drop/'
                 - script: echo $(Pipeline.Workspace)
-                    
+    
+  - stage: 'Staging'
+    displayName: 'Deploy to staging environment'
+    dependsOn: Dev
+    jobs:
+      - deployment: Deploy
+        pool:
+          vmImage: $(vmImageName)
+        environment: staging
+        variables:
+          - group: 'Release'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                - task: AzureWebApp@1
+                  displayName: Deploy to Azure Web App with Staging Env
+                  inputs:
+                    azureSubscription: 'MyARMSubscription'
+                    appType: webAppLinux
+                    appName: $(webAppNameDev)
+                    package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
