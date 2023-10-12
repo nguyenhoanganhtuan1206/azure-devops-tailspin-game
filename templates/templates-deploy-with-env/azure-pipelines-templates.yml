@@ -5,7 +5,6 @@ jobs:
       subscriptionName: MyARMSubscription
       vmImageName: 'ubuntu-latest'
 
-    dependsOn: ${{ parameters.dependsOn }}
     condition: succeeded()
     pool: 
       vmImage: $(vmImageName)

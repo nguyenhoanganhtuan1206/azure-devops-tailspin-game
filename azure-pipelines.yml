@@ -79,10 +79,12 @@ stages:
               
   - stage: Dev
     jobs:
+      - job: Build
+        dependsOn: Build
+
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
-          dependsOn: Build
           appServiceName: $(webAppNameDev)
           package: $(Pipeline.WorkSpace)/drop/
     # displayName: 'Deploy to the dev environment'
