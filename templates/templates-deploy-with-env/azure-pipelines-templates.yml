@@ -17,7 +17,7 @@ jobs:
             - download: current
               artifact: drop
             - task: AzureWebApp@1
-              display: 'Azure App Service Deploy to ${{ parameters.env }} environment'
+              displayName: 'Azure App Service Deploy to ${{ parameters.env }} environment'
               inputs:
                 azureSubscription: $(subscriptionName)
                 appName: ${{ parameters.appServiceName }}
