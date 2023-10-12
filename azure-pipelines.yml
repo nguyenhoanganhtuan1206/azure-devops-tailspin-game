@@ -94,6 +94,7 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
+          vmImageName: 'ubuntu-latest'
           appServiceName: $[variables.WebAppNameDev]
           package: $(Pipeline.WorkSpace)/drop/
 
@@ -105,5 +106,6 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: staging
+          vmImageName: 'ubuntu-latest'
           appServiceName: $[variables.WebAppNameStaging]
           package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
