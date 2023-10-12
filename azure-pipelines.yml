@@ -101,5 +101,5 @@ stages:
                     azureSubscription: 'MyARMSubscription'
                     appType: webAppLinux
                     appName: $(webAppNameDev)
-                    package: '$(System.DefaultWorkingDirectory)/home/vsts/work/1/*/**'
+                    package: '$(System.DefaultWorkingDirectory)/*/**'
                     
