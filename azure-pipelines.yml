@@ -8,7 +8,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-  - stage: 'Build'
+  - stage: Build
     displayName: 'Build the web application'
     jobs:
       - job: 'Build'
@@ -77,7 +77,7 @@ stages:
               ArtifactName: 'drop'
               publishLocation: 'Container'
               
-  - stage: 'Dev dev'
+  - stage: Dev
     jobs:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
@@ -110,7 +110,7 @@ stages:
     #                 package: '$(Pipeline.Workspace)/drop/'
     #             - script: echo $(Pipeline.Workspace)
     
-  - stage: 'Staging'
+  - stage: Staging
     displayName: 'Deploy to staging environment'
     dependsOn: Dev
     jobs:
