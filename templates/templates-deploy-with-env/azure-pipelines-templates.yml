@@ -1,5 +1,5 @@
 jobs:
-  - job: Deploy
+  - deployment: Deploy
     variables:
       webAppType: webAppLinux
       subscriptionName: MyARMSubscription
