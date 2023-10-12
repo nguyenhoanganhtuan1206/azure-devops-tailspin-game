@@ -10,10 +10,16 @@ parameters:
     default: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
-  releaseBranchName: 'release'
+  - group: web-app-variables
 
-  vmImageName: 'ubuntu-latest'
+  - name: buildConfiguration
+    value: 'Release'
+  
+  - name: releaseBranchName
+    value: 'release'
+
+  - name: vmImageName
+    value: 'ubuntu-latest'
 
 stages:
   - stage: Deploy_Build
@@ -94,8 +100,7 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
-          vmImageName: 'ubuntu-latest'
-          appServiceName: $[variables.WebAppNameDev]
+          appServiceName: $(WebAppNameDev)
           package: $(Pipeline.WorkSpace)/drop/
 
   - stage: Deploy_Staging
@@ -103,9 +108,9 @@ stages:
     dependsOn: Deploy_Dev
     jobs:
       - job: Build
+      
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: staging
-          vmImageName: 'ubuntu-latest'
-          appServiceName: $[variables.WebAppNameStaging]
+          appServiceName: $(WebAppNameStaging)
           package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
