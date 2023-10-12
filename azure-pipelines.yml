@@ -43,7 +43,7 @@ stages:
             workingDirectory: $(wwwrootDir)
           
           - task: DotNetCoreCLI@2
-            displayName: 'Restore projcet dependencies'
+            displayName: 'Restore project dependencies'
             inputs:
               command: restore
               projects: '**/*.csproj'
@@ -64,13 +64,18 @@ stages:
               arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
               zipAfterPublish: true
 
-          - script: | 
-              echo rootDir: $(wwwrootDir)
-              echo Build.DefinitionName: $(Build.DefinitonName)     
-            displayName: Show information
-
           - publish: $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
             artifact: drop
+
+          - script: | 
+              echo rootDir: $(wwwrootDir)
+              echo Build.DefinitionName: $(Build.DefinitionName)
+              echo Build.ArtifactStagingDirectory: $(Build.ArtifactStagingDirectory) 
+            displayName: Show information
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              ArtifactName: drop
     
   - stage: 'Dev'
     displayName: 'Deploy to the dev environment'
