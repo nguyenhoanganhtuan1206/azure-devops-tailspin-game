@@ -69,12 +69,6 @@ stages:
               echo Build.DefinitionName: $(Build.DefinitionName)
               echo Build.ArtifactStagingDirectory: $(Build.ArtifactStagingDirectory) 
             displayName: Show information
-
-          # - task: PublishBuildArtifacts@1
-          #   inputs:
-          #     PathtoPublish: $(Build.ArtifactStagingDirectory)
-          #     ArtifactName: drop
-          #     publishLocation: 'Container'
           
           - publish: $(Build.ArtifactStagingDirectory)
             name: drop
@@ -102,5 +96,5 @@ stages:
                     azureSubscription: 'MyARMSubscription'
                     appType: webAppLinux
                     appName: $(webAppNameDev)
-                    package: 
+                    package: '$(System.DefaultWorkingDirectory)/home/vsts/work/1/*/**.zip'
                     
