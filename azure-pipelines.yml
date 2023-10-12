@@ -64,9 +64,6 @@ stages:
               arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
               zipAfterPublish: true
 
-          - publish: $(Build.ArtifactStagingDirectory)/$(buildConfiguration)
-            artifact: drop
-
           - script: | 
               echo rootDir: $(wwwrootDir)
               echo Build.DefinitionName: $(Build.DefinitionName)
