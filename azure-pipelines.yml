@@ -94,6 +94,7 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
+          azureSubscription: MyARMSubscription
           appServiceName: $(WebAppNameDev)
           package: $(Pipeline.WorkSpace)/drop/
 
