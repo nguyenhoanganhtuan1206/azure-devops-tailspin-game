@@ -86,7 +86,7 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
-          appServiceName: $(webAppNameDev)
+          appServiceName: $(WebAppNameDev)
           package: $(Pipeline.WorkSpace)/drop/
 
   - stage: Deploy_Staging
