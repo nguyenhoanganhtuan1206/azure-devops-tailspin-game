@@ -78,6 +78,7 @@ stages:
               publishLocation: 'Container'
               
   - stage: Deploy_Dev
+    displayName: Deploy to the dev environment
     dependsOn: Deploy_Build
     jobs:
       - job: Build
@@ -89,11 +90,12 @@ stages:
           package: $(Pipeline.WorkSpace)/drop/
 
   - stage: Deploy_Staging
+    displayName: Deploy to the staging environment
     dependsOn: Deploy_Dev
     jobs:
       - job: Build
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: staging
-          appServiceName: $(webAppNameDev)
+          appServiceName: $(WebAppNameStaging)
           package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip

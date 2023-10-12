@@ -2,7 +2,6 @@ jobs:
   - deployment: Deploy
     variables:
       webAppType: webAppLinux
-      subscriptionName: MyARMSubscription
       vmImageName: 'ubuntu-latest'
 
     condition: succeeded()
