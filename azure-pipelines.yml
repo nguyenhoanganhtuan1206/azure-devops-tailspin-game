@@ -19,7 +19,7 @@ stages:
   - stage: Deploy_Build
     displayName: 'Build the web application'
     jobs: 
-      - job: Build
+      - job: 'Deploy build'
       
       - template: templates/templates-deploy-with-env/azure-pipelines-templates-build.yml
               
@@ -27,7 +27,7 @@ stages:
     displayName: Deploy to the dev environment
     dependsOn: Deploy_Build
     jobs:
-      - job: Build
+      - job: 'Deploy Dev'
 
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
@@ -40,7 +40,7 @@ stages:
     displayName: Deploy to the staging environment
     dependsOn: Deploy_Dev
     jobs:
-      - job: Build
+      - job: 'Deploy Staging'
       
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
