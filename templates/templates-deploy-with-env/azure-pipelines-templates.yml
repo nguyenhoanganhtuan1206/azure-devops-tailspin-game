@@ -18,7 +18,7 @@ jobs:
             - task: AzureWebApp@1
               displayName: 'Azure App Service Deploy to ${{ parameters.env }} environment'
               inputs:
-                azureSubscription: $(subscriptionName)
+                azureSubscription: MyARMSubscription
                 appName: ${{ parameters.appServiceName }}
                 appType: $(webAppType)
                 package: ${{ parameters.package }}
