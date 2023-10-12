@@ -114,7 +114,7 @@ stages:
     
   - stage: Deploy_Staging
     displayName: 'Deploy to staging environment'
-    dependsOn: Deploy Dev
+    dependsOn: Deploy_Dev
     jobs:
       - deployment: Deploy
         pool:
