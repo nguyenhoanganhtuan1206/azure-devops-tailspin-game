@@ -1,6 +1,14 @@
 trigger:
   - main
 
+parameters:
+  - name: azureSubscription
+    type: string
+    default: MyARMSubscription
+  - name: vmImageName
+    type: string
+    default: 'ubuntu-latest'
+
 variables:
   buildConfiguration: 'Release'
   releaseBranchName: 'release'
@@ -86,7 +94,7 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: dev
-          appServiceName: $(WebAppNameDev)
+          appServiceName: $[variables.WebAppNameDev]
           package: $(Pipeline.WorkSpace)/drop/
 
   - stage: Deploy_Staging
@@ -97,5 +105,5 @@ stages:
       - template: templates/templates-deploy-with-env/azure-pipelines-templates.yml
         parameters:
           env: staging
-          appServiceName: $(WebAppNameStaging)
+          appServiceName: $[variables.WebAppNameStaging]
           package: $(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip
