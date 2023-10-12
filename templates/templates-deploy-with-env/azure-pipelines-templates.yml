@@ -1,0 +1,25 @@
+jobs:
+  - job: Deploy
+    variables:
+      webAppType: webAppLinux
+      subscriptionName: MyARMSubscription
+      vmImageName: 'ubuntu-latest'
+
+    dependsOn: ${{ parameters.dependsOn }}
+    condition: succeeded()
+    pool: 
+      vmImage: $(vmImageName)
+    environment: ${{ parameters.env }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: current
+              artifact: drop
+            - task: AzureWebApp@1
+              display: 'Azure App Service Deploy to ${{ parameters.env }} environment'
+              inputs:
+                azureSubscription: $(subscriptionName)
+                appName: ${{ parameters.appServiceName }}
+                appType: $(webAppType)
+                package: ${{ parameters.package }}

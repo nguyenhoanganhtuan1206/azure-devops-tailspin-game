@@ -77,31 +77,38 @@ stages:
               ArtifactName: 'drop'
               publishLocation: 'Container'
               
-  - stage: 'Dev'
-    displayName: 'Deploy to the dev environment'
-    dependsOn: Build
-    condition: succeeded()
+  - stage: 'Dev dev'
     jobs:
-      - deployment: Deploy
-        pool:
-          vmImage: $(vmImageName)
-        environment: dev
-        variables:
-          - group: Release
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - download: current
-                  artifact: drop
-                - task: AzureWebApp@1
-                  displayName: 'Auzre App Service Deploy: website'
-                  inputs:
-                    azureSubscription: 'MyARMSubscription'
-                    appType: webAppLinux
-                    appName: $(webAppNameDev)
-                    package: '$(Pipeline.Workspace)/drop/'
-                - script: echo $(Pipeline.Workspace)
+      - template: templates/azure-pipelines-templates.yml
+        parameters:
+          env: dev
+          dependsOn: Build
+          appServiceName: $(webAppNameDev)
+          package: $(Pipeline.WorkSpace)/drop/
+    # displayName: 'Deploy to the dev environment'
+    # dependsOn: Build
+    # condition: succeeded()
+    # jobs:
+    #   - deployment: Deploy
+    #     pool:
+    #       vmImage: $(vmImageName)
+    #     environment: dev
+    #     variables:
+    #       - group: Release
+    #     strategy:
+    #       runOnce:
+    #         deploy:
+    #           steps:
+    #             - download: current
+    #               artifact: drop
+    #             - task: AzureWebApp@1
+    #               displayName: 'Auzre App Service Deploy: website'
+    #               inputs:
+    #                 azureSubscription: 'MyARMSubscription'
+    #                 appType: webAppLinux
+    #                 appName: $(webAppNameDev)
+    #                 package: '$(Pipeline.Workspace)/drop/'
+    #             - script: echo $(Pipeline.Workspace)
     
   - stage: 'Staging'
     displayName: 'Deploy to staging environment'
@@ -112,7 +119,7 @@ stages:
           vmImage: $(vmImageName)
         environment: staging
         variables:
-          - group: 'Release'
+          - group: Release
         strategy:
           runOnce:
             deploy:
