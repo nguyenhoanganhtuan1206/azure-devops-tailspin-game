@@ -101,5 +101,6 @@ stages:
                     azureSubscription: 'MyARMSubscription'
                     appType: webAppLinux
                     appName: $(webAppNameDev)
-                    package: '$(System.DefaultWorkingDirectory)/drop'
+                    package: '$(Pipeline.Workspace)/drop/'
+                - script: echo $(Pipeline.Workspace)
                     
